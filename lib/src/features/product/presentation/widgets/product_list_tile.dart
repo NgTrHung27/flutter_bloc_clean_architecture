@@ -24,6 +24,7 @@ class ProductDataWidget extends StatelessWidget {
       builder: (_) => AppDialog(title: "pesan_hapus_produk".tr()),
     ).then(
       (value) => value ?? false
+          // ignore: use_build_context_synchronously
           ? context.read<ProductBloc>().add(
                 DeleteProductEvent(
                   productId: productId,

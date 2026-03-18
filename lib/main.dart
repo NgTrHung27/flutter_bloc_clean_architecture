@@ -1,5 +1,6 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:firebase_core/firebase_core.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:hive_flutter/hive_flutter.dart";
 import "package:hydrated_bloc/hydrated_bloc.dart";
@@ -22,9 +23,11 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     ),
     Hive.initFlutter(),
-    getTemporaryDirectory().then((path) async {
+    getTemporaryDirectory().then((dir) async {
       HydratedBloc.storage = await HydratedStorage.build(
-        storageDirectory: path,
+        storageDirectory: kIsWeb
+            ? HydratedStorageDirectory.web
+            : HydratedStorageDirectory(dir.path),
       );
     }),
   ]);
